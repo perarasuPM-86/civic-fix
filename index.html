@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CivicFix – Citizen Issue Tracker | Smart City & Civic Life</title>
+    <meta name="description" content="Empowering citizens to report, route, track, and resolve urban road and public-space issues. Built for Innovation Forge 2026.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CivicFix CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/chatbot.css">
+</head>
+<body>
+
+    <!-- ====================================================================
+         TOP NAVIGATION BAR
+         ==================================================================== -->
+    <header class="navbar" id="appNavbar">
+        <div class="container nav-container">
+            <div class="brand" id="brandLogo" onclick="CivicApp.navigate('home')">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-city"></i>
+                </div>
+                <div class="brand-text">
+                    <div class="brand-name">Civic<span>Fix</span></div>
+                    <div class="brand-tagline">Smart City Issue Tracker</div>
+                </div>
+            </div>
+
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home" class="nav-link active" data-view="home"><i class="fa-solid fa-house"></i> Home</a></li>
+                    <li><a href="#report" class="nav-link" data-view="report"><i class="fa-solid fa-circle-plus"></i> Report Issue</a></li>
+                    <li><a href="#track" class="nav-link" data-view="track"><i class="fa-solid fa-magnifying-glass-location"></i> Track Complaint</a></li>
+                    <li>
+                        <a href="#dashboard" class="nav-link" data-view="dashboard">
+                            <i class="fa-solid fa-list-check"></i> My Complaints
+                            <span class="nav-badge" id="citizenCountBadge">4</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#admin" class="nav-link" data-view="admin">
+                            <i class="fa-solid fa-shield-halved"></i> Authority Portal
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <button class="admin-switch-btn" id="adminToggleBtn" onclick="CivicApp.navigate('admin')">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span>Admin Mode</span>
+                </button>
+                <button class="mobile-nav-toggle" id="mobileNavBtn" aria-label="Toggle navigation menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ====================================================================
+         MAIN VIEW CONTAINER (Single Page Application Views)
+         ==================================================================== -->
+    <main>
+
+        <!-- VIEW 1: LANDING / HOME PAGE -->
+        <section class="view-section active-view" id="view-home">
+            <div class="container">
+                
+                <!-- Hero Section -->
+                <div class="hero-section">
+                    <div class="hero-pill">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Smart City & Civic Life • Innovation Forge 2026</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Report Civic Issues. <span>Track Until Resolution.</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        CivicFix eliminates bureaucratic delays for road cavities, stagnant water, broken sidewalks, and public-space hazards through transparent, real-time civic accountability.
+                    </p>
+                    <div class="hero-cta-group">
+                        <button class="btn btn-primary btn-lg" onclick="CivicApp.navigate('report')">
+                            <i class="fa-solid fa-circle-plus"></i> Report an Issue
+                        </button>
+                        <button class="btn btn-secondary btn-lg" onclick="CivicApp.navigate('track')">
+                            <i class="fa-solid fa-magnifying-glass"></i> Track Complaint
+                        </button>
+                        <button class="btn btn-outline-primary btn-lg" onclick="CivicApp.navigate('admin')">
+                            <i class="fa-solid fa-shield-halved"></i> Authority Dashboard
+                        </button>
+                    </div>
+
+                    <!-- Live City Pulse Stats Bar -->
+                    <div class="city-pulse-bar" id="heroPulseStats">
+                        <div class="pulse-stat">
+                            <div class="pulse-number accent-blue" id="pulseTotalCount">4</div>
+                            <div class="pulse-label">Total Reported</div>
+                        </div>
+                        <div class="pulse-stat">
+                            <div class="pulse-number accent-amber" id="pulseActiveCount">3</div>
+                            <div class="pulse-label">Active Workflows</div>
+                        </div>
+                        <div class="pulse-stat">
+                            <div class="pulse-number accent-emerald" id="pulseResolvedCount">1</div>
+                            <div class="pulse-label">Issues Resolved</div>
+                        </div>
+                        <div class="pulse-stat">
+                            <div class="pulse-number accent-purple">36 hrs</div>
+                            <div class="pulse-label">Avg. Turnaround</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Core 4-Step Journey Section -->
+                <div class="section-header">
+                    <span class="section-tag">How CivicFix Works</span>
+                    <h2 class="section-title">The Report → Route → Track → Resolve Cycle</h2>
+                    <p class="section-desc">A closed-loop civic tech pipeline connecting proactive citizens with municipal public works crews.</p>
+                </div>
+
+                <div class="journey-grid">
+                    <div class="journey-card">
+                        <div class="journey-step-num">01</div>
+                        <div class="journey-icon"><i class="fa-solid fa-camera"></i></div>
+                        <h3 class="journey-title">Report</h3>
+                        <p class="journey-desc">Citizens snap a photo, pick an issue category, drop a location pin, and submit a complaint in under 60 seconds.</p>
+                    </div>
+
+                    <div class="journey-card">
+                        <div class="journey-step-num">02</div>
+                        <div class="journey-icon"><i class="fa-solid fa-network-wired"></i></div>
+                        <h3 class="journey-title">Route</h3>
+                        <p class="journey-desc">Smart categorization routes the ticket to the responsible department (Road Maintenance, Water, Sanitation) with priority ratings.</p>
+                    </div>
+
+                    <div class="journey-card">
+                        <div class="journey-step-num">03</div>
+                        <div class="journey-icon"><i class="fa-solid fa-timeline"></i></div>
+                        <h3 class="journey-title">Track</h3>
+                        <p class="journey-desc">Transparent 4-stage tracking timeline gives citizens full visibility from submission to field crew dispatch.</p>
+                    </div>
+
+                    <div class="journey-card">
+                        <div class="journey-step-num">04</div>
+                        <div class="journey-icon"><i class="fa-solid fa-circle-check"></i></div>
+                        <h3 class="journey-title">Resolve</h3>
+                        <p class="journey-desc">Field teams execute remediation, supervisory officers verify quality, and the issue is officially signed off as resolved.</p>
+                    </div>
+                </div>
+
+                <!-- Category Showcase Grid -->
+                <div class="section-header">
+                    <span class="section-tag">Common Public Space Challenges</span>
+                    <h2 class="section-title">What Civic Issues Can You Report?</h2>
+                    <p class="section-desc">Click any category below to immediately begin a pre-filled complaint report.</p>
+                </div>
+
+                <div class="category-showcase-grid" id="categoryShowcaseGrid">
+                    <!-- Injected dynamically by app.js -->
+                </div>
+
+                <!-- Innovation Forge Demo Callout -->
+                <div class="demo-guide-card">
+                    <div class="demo-guide-info">
+                        <h3 class="demo-guide-title">
+                            <i class="fa-solid fa-award text-amber-400"></i> Innovation Forge 2026 Presentation Ready
+                        </h3>
+                        <p class="demo-guide-text">
+                            Experience the full end-to-end journey in one click: Report a pothole, generate a complaint ID, monitor the tracking timeline, and jump into the Admin Dashboard to update status to Resolved.
+                        </p>
+                    </div>
+                    <button class="btn btn-primary" onclick="CivicApp.startDemoGuide()">
+                        <i class="fa-solid fa-play"></i> Launch Guided Demo
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- VIEW 2: CITIZEN ISSUE REPORTING WIZARD -->
+        <section class="view-section" id="view-report">
+            <div class="container reporting-container">
+                
+                <!-- Stepper Progress Header -->
+                <div class="wizard-steps-nav">
+                    <div class="wizard-step-node active" data-step="1" onclick="CivicApp.wizardGoTo(1)">
+                        <div class="wizard-node-circle">1</div>
+                        <div class="wizard-node-label">Category</div>
+                    </div>
+                    <div class="wizard-step-node" data-step="2" onclick="CivicApp.wizardGoTo(2)">
+                        <div class="wizard-node-circle">2</div>
+                        <div class="wizard-node-label">Details</div>
+                    </div>
+                    <div class="wizard-step-node" data-step="3" onclick="CivicApp.wizardGoTo(3)">
+                        <div class="wizard-node-circle">3</div>
+                        <div class="wizard-node-label">Location</div>
+                    </div>
+                    <div class="wizard-step-node" data-step="4" onclick="CivicApp.wizardGoTo(4)">
+                        <div class="wizard-node-circle">4</div>
+                        <div class="wizard-node-label">Photo</div>
+                    </div>
+                    <div class="wizard-step-node" data-step="5" onclick="CivicApp.wizardGoTo(5)">
+                        <div class="wizard-node-circle">5</div>
+                        <div class="wizard-node-label">Review</div>
+                    </div>
+                </div>
+
+                <!-- Wizard Main Form Box -->
+                <div class="wizard-card">
+                    <form id="reportIssueForm" onsubmit="event.preventDefault();">
+
+                        <!-- STEP 1: Select Category -->
+                        <div class="wizard-step-pane active-step" id="step-pane-1">
+                            <div class="wizard-pane-header">
+                                <h2 class="wizard-pane-title">Step 1: Select Issue Category</h2>
+                                <p class="wizard-pane-desc">Choose the category that best describes the road or public space problem.</p>
+                            </div>
+
+                            <div class="category-select-grid" id="categorySelectGrid">
+                                <!-- Generated by app.js -->
+                            </div>
+
+                            <input type="hidden" id="selectedCategoryId" value="pothole">
+                            <input type="hidden" id="selectedCategoryName" value="Pothole">
+                        </div>
+
+                        <!-- STEP 2: Issue Details -->
+                        <div class="wizard-step-pane" id="step-pane-2">
+                            <div class="wizard-pane-header">
+                                <h2 class="wizard-pane-title">Step 2: Describe the Issue</h2>
+                                <p class="wizard-pane-desc">Provide a clear title and brief description to help municipal authorities assess urgency.</p>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="issueTitle">Issue Title <span class="required">*</span></label>
+                                <input type="text" id="issueTitle" class="form-input" placeholder="e.g. Large pothole near main road" required>
+                                
+                                <div class="preset-chips-group">
+                                    <span class="preset-chip-label">Quick Suggestions:</span>
+                                    <button type="button" class="preset-chip" onclick="CivicApp.fillDemoTitle('Large pothole near main road')">Large pothole near main road</button>
+                                    <button type="button" class="preset-chip" onclick="CivicApp.fillDemoTitle('Severe water logging after rainfall')">Severe water logging</button>
+                                    <button type="button" class="preset-chip" onclick="CivicApp.fillDemoTitle('Damaged road surface with fissures')">Damaged road surface</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="issueDescription">Detailed Description <span class="required">*</span></label>
+                                <textarea id="issueDescription" class="form-textarea" placeholder="Describe the size, severity, vehicle disruption, or safety hazard..." required></textarea>
+                                
+                                <div class="preset-chips-group">
+                                    <span class="preset-chip-label">Quick Suggestions:</span>
+                                    <button type="button" class="preset-chip" onclick="CivicApp.fillDemoDesc('Large pothole causing difficulty for two-wheelers and vehicles near the main junction. Depth exceeds 6 inches.')">Pothole Hazard</button>
+                                    <button type="button" class="preset-chip" onclick="CivicApp.fillDemoDesc('Water stagnation blocking pedestrian walkway and street access. Creates mosquito breeding risk.')">Water Logging</button>
+                                    <button type="button" class="preset-chip" onclick="CivicApp.fillDemoDesc('Construction rubble and tree debris blocking entire sidewalk. Pedestrians forced into vehicle traffic.')">Sidewalk Blocked</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 3: Location -->
+                        <div class="wizard-step-pane" id="step-pane-3">
+                            <div class="wizard-pane-header">
+                                <h2 class="wizard-pane-title">Step 3: Specify Issue Location</h2>
+                                <p class="wizard-pane-desc">Pinpoint the location or select a popular city area.</p>
+                            </div>
+
+                            <div class="location-selector-wrap">
+                                <!-- Interactive Mock Map Component -->
+                                <div class="mock-map-container" id="mockMap" onclick="CivicApp.onMapClick(event)">
+                                    <div class="mock-map-grid"></div>
+                                    <div class="mock-map-roads">
+                                        <svg viewBox="0 0 800 300" preserveAspectRatio="none">
+                                            <line x1="0" y1="150" x2="800" y2="150" stroke="rgba(56, 189, 248, 0.25)" stroke-width="14" />
+                                            <line x1="400" y1="0" x2="400" y2="300" stroke="rgba(56, 189, 248, 0.25)" stroke-width="14" />
+                                            <line x1="0" y1="80" x2="800" y2="80" stroke="rgba(255, 255, 255, 0.1)" stroke-width="4" stroke-dasharray="8 6" />
+                                            <line x1="0" y1="220" x2="800" y2="220" stroke="rgba(255, 255, 255, 0.1)" stroke-width="4" stroke-dasharray="8 6" />
+                                            <circle cx="400" cy="150" r="45" fill="none" stroke="rgba(56, 189, 248, 0.3)" stroke-width="3" />
+                                        </svg>
+                                    </div>
+                                    <div class="mock-map-pulse" id="mockMapPulse"></div>
+                                    <div class="mock-map-pin" id="mockMapPin">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                    </div>
+                                    <div class="mock-map-badge">
+                                        <i class="fa-solid fa-crosshairs"></i>
+                                        <span>Interactive City Grid:</span>
+                                        <span class="coords" id="mockMapCoords">12.9716° N, 77.5946° E</span>
+                                    </div>
+                                </div>
+
+                                <!-- Popular Location Presets -->
+                                <div>
+                                    <label class="form-label">Or Pick From Recognized Municipal Sectors:</label>
+                                    <div class="preset-locations-grid" id="presetLocationsGrid">
+                                        <!-- Injected by app.js -->
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="margin-top: 0.5rem;">
+                                    <label class="form-label" for="manualLocation">Area / Locality Name <span class="required">*</span></label>
+                                    <input type="text" id="manualLocation" class="form-input" value="Main Road" placeholder="e.g. Main Road, Sector 4" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label" for="manualAddress">Specific Street Address / Landmark</label>
+                                    <input type="text" id="manualAddress" class="form-input" value="Main Road, Near Signal Junction, Sector 4" placeholder="e.g. Near Bus Shelter #3">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 4: Photo Upload -->
+                        <div class="wizard-step-pane" id="step-pane-4">
+                            <div class="wizard-pane-header">
+                                <h2 class="wizard-pane-title">Step 4: Upload Photo Evidence</h2>
+                                <p class="wizard-pane-desc">Upload a picture of the issue or choose a realistic sample photo.</p>
+                            </div>
+
+                            <div class="photo-uploader-wrap">
+                                <!-- Hidden real file input -->
+                                <input type="file" id="photoFileInput" accept="image/*" style="display: none;" onchange="CivicApp.handleFileSelect(event)">
+
+                                <!-- Drag & Drop Box -->
+                                <div class="drop-zone" id="dropZone" onclick="document.getElementById('photoFileInput').click()">
+                                    <div class="drop-zone-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                                    <div class="drop-zone-text">Click to browse or drop an image here</div>
+                                    <div class="drop-zone-hint">Supports JPG, PNG, WebP (simulated local image storage)</div>
+                                </div>
+
+                                <!-- Image Preview Box -->
+                                <div class="photo-preview-container" id="photoPreviewContainer">
+                                    <img id="photoPreviewImg" src="assets/images/pothole.jpg" alt="Selected Issue Preview">
+                                    <button type="button" class="photo-remove-btn" onclick="CivicApp.clearPhoto()">
+                                        <i class="fa-solid fa-trash-can"></i> Remove
+                                    </button>
+                                </div>
+
+                                <!-- Sample Photo Presets (Crucial for live demo ease) -->
+                                <div>
+                                    <label class="form-label"><i class="fa-solid fa-images"></i> Or Select Sample Demonstration Photo:</label>
+                                    <div class="sample-photos-row" id="samplePhotosRow">
+                                        <!-- Injected by app.js -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 5: Review & Confirm -->
+                        <div class="wizard-step-pane" id="step-pane-5">
+                            <div class="wizard-pane-header">
+                                <h2 class="wizard-pane-title">Step 5: Review Complaint Summary</h2>
+                                <p class="wizard-pane-desc">Verify your issue details before sending it to municipal authorities.</p>
+                            </div>
+
+                            <div class="review-summary-box">
+                                <div class="review-item">
+                                    <span class="review-label">Category:</span>
+                                    <span class="review-value" id="revCategory">Pothole</span>
+                                </div>
+                                <div class="review-item">
+                                    <span class="review-label">Issue Title:</span>
+                                    <span class="review-value" id="revTitle">Large pothole near main road</span>
+                                </div>
+                                <div class="review-item">
+                                    <span class="review-label">Description:</span>
+                                    <span class="review-value" id="revDescription">-</span>
+                                </div>
+                                <div class="review-item">
+                                    <span class="review-label">Location:</span>
+                                    <span class="review-value" id="revLocation">Main Road</span>
+                                </div>
+                                <div class="review-item">
+                                    <span class="review-label">Address:</span>
+                                    <span class="review-value" id="revAddress">Main Road, Sector 4</span>
+                                </div>
+                                <div class="review-item">
+                                    <span class="review-label">Photo Evidence:</span>
+                                    <div class="review-value">
+                                        <img id="revPhotoImg" src="assets/images/pothole.jpg" class="review-img-thumb" alt="Review Photo">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                                <i class="fa-solid fa-circle-info text-blue-400"></i>
+                                <span>A unique tracking ID (CFX-2026-XXXXX) will be generated upon submission.</span>
+                            </div>
+                        </div>
+
+                        <!-- Wizard Step Actions Footer -->
+                        <div class="wizard-footer">
+                            <button type="button" class="btn btn-secondary" id="wizardPrevBtn" onclick="CivicApp.wizardPrev()">
+                                <i class="fa-solid fa-arrow-left"></i> Previous
+                            </button>
+                            <div style="display: flex; gap: 0.75rem;">
+                                <button type="button" class="btn btn-secondary" onclick="CivicApp.navigate('home')">
+                                    Cancel
+                                </button>
+                                <button type="button" class="btn btn-primary" id="wizardNextBtn" onclick="CivicApp.wizardNext()">
+                                    Next Step <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                                <button type="button" class="btn btn-success" id="wizardSubmitBtn" style="display: none;" onclick="CivicApp.submitComplaint()">
+                                    <i class="fa-solid fa-paper-plane"></i> Submit Complaint
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- VIEW 3: SUBMISSION SUCCESS SCREEN -->
+        <section class="view-section" id="view-success">
+            <div class="container">
+                <div class="success-card">
+                    <div class="success-icon-wrap">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <h2 class="success-title">Complaint Submitted Successfully!</h2>
+                    <p class="success-desc">
+                        Your civic issue report has been logged into the municipal queue. Keep your unique Complaint ID handy to track real-time resolution progress.
+                    </p>
+
+                    <!-- Unique ID Box -->
+                    <div class="complaint-id-box">
+                        <div class="cid-info">
+                            <div class="cid-label">Unique Complaint ID</div>
+                            <div class="cid-value" id="successComplaintId">CFX-2026-00128</div>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" onclick="CivicApp.copyComplaintId()">
+                            <i class="fa-regular fa-copy"></i> Copy
+                        </button>
+                    </div>
+
+                    <!-- Summary Info List -->
+                    <div class="success-details-list">
+                        <div class="success-details-row">
+                            <span class="text-muted">Issue Category:</span>
+                            <strong id="successCategory">Pothole</strong>
+                        </div>
+                        <div class="success-details-row">
+                            <span class="text-muted">Reported Location:</span>
+                            <strong id="successLocation">Main Road</strong>
+                        </div>
+                        <div class="success-details-row">
+                            <span class="text-muted">Submission Date:</span>
+                            <strong id="successDate">Just now</strong>
+                        </div>
+                        <div class="success-details-row">
+                            <span class="text-muted">Initial Status:</span>
+                            <span class="badge badge-status-reported">
+                                <span class="badge-dot"></span> Reported
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="success-actions-group">
+                        <button class="btn btn-primary" id="successTrackBtn" onclick="CivicApp.trackFromSuccess()">
+                            <i class="fa-solid fa-magnifying-glass-location"></i> Track This Complaint
+                        </button>
+                        <button class="btn btn-secondary" onclick="CivicApp.navigate('report')">
+                            <i class="fa-solid fa-plus"></i> Report Another Issue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 4: TRACK COMPLAINT PAGE -->
+        <section class="view-section" id="view-track">
+            <div class="container track-container">
+                
+                <div class="section-header">
+                    <span class="section-tag">Real-Time Transparency</span>
+                    <h2 class="section-title">Track Complaint Status</h2>
+                    <p class="section-desc">Enter your unique complaint ID below to inspect live field progress and departmental remarks.</p>
+                </div>
+
+                <!-- Search Box -->
+                <div class="track-search-box">
+                    <form onsubmit="event.preventDefault(); CivicApp.searchComplaint();">
+                        <div class="search-input-group">
+                            <input type="text" id="trackSearchInput" class="form-input" placeholder="Enter Complaint ID (e.g. CFX-2026-00124)" value="CFX-2026-00124">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-magnifying-glass"></i> Track
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Quick Demo IDs Chips -->
+                    <div class="quick-demo-ids">
+                        <span class="quick-demo-label">Quick Demo IDs:</span>
+                        <button type="button" class="demo-id-chip" onclick="CivicApp.quickTrack('CFX-2026-00124')">CFX-2026-00124 (Reported)</button>
+                        <button type="button" class="demo-id-chip" onclick="CivicApp.quickTrack('CFX-2026-00125')">CFX-2026-00125 (Assigned)</button>
+                        <button type="button" class="demo-id-chip" onclick="CivicApp.quickTrack('CFX-2026-00126')">CFX-2026-00126 (In Progress)</button>
+                        <button type="button" class="demo-id-chip" onclick="CivicApp.quickTrack('CFX-2026-00127')">CFX-2026-00127 (Resolved)</button>
+                    </div>
+                </div>
+
+                <!-- Complaint Details & Timeline Card -->
+                <div class="track-result-card" id="trackResultCard">
+                    <!-- Dynamic Content Populated by app.js -->
+                </div>
+
+                <!-- Error / Not Found State -->
+                <div class="track-not-found" id="trackNotFound">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <h3>Complaint Not Found</h3>
+                    <p>No complaint record matches the entered ID. Please double check the ID or try one of the demo records above.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- VIEW 5: CITIZEN DASHBOARD ("MY COMPLAINTS") -->
+        <section class="view-section" id="view-dashboard">
+            <div class="container">
+                
+                <div class="citizen-dash-header">
+                    <div>
+                        <h2 class="section-title">Citizen Dashboard</h2>
+                        <p class="section-desc">Manage, monitor, and review your submitted civic issue reports.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="CivicApp.navigate('report')">
+                        <i class="fa-solid fa-plus"></i> Report New Issue
+                    </button>
+                </div>
+
+                <!-- Citizen Overview Metrics -->
+                <div class="citizen-stats-row">
+                    <div class="citizen-stat-card cstat-blue">
+                        <div class="citizen-stat-icon"><i class="fa-solid fa-folder-open"></i></div>
+                        <div>
+                            <div class="citizen-stat-val" id="cstatTotal">4</div>
+                            <div class="citizen-stat-lbl">Total Complaints</div>
+                        </div>
+                    </div>
+                    <div class="citizen-stat-card cstat-amber">
+                        <div class="citizen-stat-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                        <div>
+                            <div class="citizen-stat-val" id="cstatActive">3</div>
+                            <div class="citizen-stat-lbl">Active & In Progress</div>
+                        </div>
+                    </div>
+                    <div class="citizen-stat-card cstat-emerald">
+                        <div class="citizen-stat-icon"><i class="fa-solid fa-circle-check"></i></div>
+                        <div>
+                            <div class="citizen-stat-val" id="cstatResolved">1</div>
+                            <div class="citizen-stat-lbl">Resolved Issues</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="filter-tabs-row">
+                    <button class="filter-tab active" data-filter="all" onclick="CivicApp.filterCitizenList('all')">All Complaints</button>
+                    <button class="filter-tab" data-filter="active" onclick="CivicApp.filterCitizenList('active')">Active</button>
+                    <button class="filter-tab" data-filter="resolved" onclick="CivicApp.filterCitizenList('resolved')">Resolved</button>
+                </div>
+
+                <!-- Complaints Grid -->
+                <div class="complaints-list-grid" id="citizenComplaintsGrid">
+                    <!-- Populated dynamically by app.js -->
+                </div>
+
+            </div>
+        </section>
+
+        <!-- VIEW 6: ADMIN / AUTHORITY DASHBOARD -->
+        <section class="view-section" id="view-admin">
+            <div class="container">
+                
+                <!-- Authority Banner -->
+                <div class="admin-header-banner">
+                    <div>
+                        <div class="admin-badge-label">
+                            <i class="fa-solid fa-building-shield"></i> Municipal Operations Control Center
+                        </div>
+                        <h2 class="admin-portal-title">Civic Complaints Authority Dashboard</h2>
+                        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                            Officer Desk: <strong>Central City Municipal Works</strong> | Innovation Forge 2026 Admin View
+                        </p>
+                    </div>
+                    <div style="display: flex; gap: 0.75rem; align-items: center;">
+                        <button class="btn btn-secondary btn-sm" onclick="CivicApp.resetDemoData()">
+                            <i class="fa-solid fa-rotate"></i> Reset Sample Data
+                        </button>
+                        <button class="btn btn-primary btn-sm" onclick="CivicApp.navigate('report')">
+                            <i class="fa-solid fa-plus"></i> New Report
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Admin KPI Counters -->
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-card">
+                        <div class="admin-stat-num text-white" id="adminStatTotal">4</div>
+                        <div class="admin-stat-lbl">Total Issues</div>
+                    </div>
+                    <div class="admin-stat-card" style="border-left: 3px solid var(--status-reported);">
+                        <div class="admin-stat-num" style="color: var(--status-reported);" id="adminStatReported">1</div>
+                        <div class="admin-stat-lbl">New Reports</div>
+                    </div>
+                    <div class="admin-stat-card" style="border-left: 3px solid var(--status-assigned);">
+                        <div class="admin-stat-num" style="color: var(--status-assigned);" id="adminStatAssigned">1</div>
+                        <div class="admin-stat-lbl">Assigned</div>
+                    </div>
+                    <div class="admin-stat-card" style="border-left: 3px solid var(--status-progress);">
+                        <div class="admin-stat-num" style="color: var(--status-progress);" id="adminStatProgress">1</div>
+                        <div class="admin-stat-lbl">In Progress</div>
+                    </div>
+                    <div class="admin-stat-card" style="border-left: 3px solid var(--status-resolved);">
+                        <div class="admin-stat-num" style="color: var(--status-resolved);" id="adminStatResolved">1</div>
+                        <div class="admin-stat-lbl">Resolved</div>
+                    </div>
+                </div>
+
+                <!-- Search and Filtering Toolbar -->
+                <div class="admin-toolbar">
+                    <div class="admin-search-wrap">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="adminSearchInput" class="form-input" placeholder="Search by ID, Issue Title, Location..." oninput="CivicApp.filterAdminTable()">
+                    </div>
+
+                    <div class="filter-selects-group">
+                        <div class="filter-select-item">
+                            <select id="adminFilterStatus" class="form-select" onchange="CivicApp.filterAdminTable()">
+                                <option value="all">All Statuses</option>
+                                <option value="Reported">Reported</option>
+                                <option value="Assigned">Assigned</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Resolved">Resolved</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-select-item">
+                            <select id="adminFilterCategory" class="form-select" onchange="CivicApp.filterAdminTable()">
+                                <option value="all">All Categories</option>
+                                <option value="Pothole">Pothole</option>
+                                <option value="Damaged Road">Damaged Road</option>
+                                <option value="Water Stagnation">Water Stagnation</option>
+                                <option value="Blocked Footpath">Blocked Footpath</option>
+                                <option value="Street/Public-Space Maintenance">Street Maintenance</option>
+                                <option value="Other Civic Issue">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-select-item">
+                            <select id="adminFilterPriority" class="form-select" onchange="CivicApp.filterAdminTable()">
+                                <option value="all">All Priorities</option>
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                                <option value="Critical">Critical</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complaints Management Table -->
+                <div class="admin-table-container">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Complaint ID</th>
+                                    <th>Issue</th>
+                                    <th>Category</th>
+                                    <th>Location</th>
+                                    <th>Date</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminComplaintsTableBody">
+                                <!-- Populated dynamically by app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ====================================================================
+         ADMIN COMPLAINT MANAGEMENT MODAL / DRAWER
+         ==================================================================== -->
+    <div class="modal-backdrop" id="adminModalBackdrop" onclick="if(event.target === this) CivicApp.closeAdminModal()">
+        <div class="modal-window">
+            <div class="modal-header">
+                <div>
+                    <h3 class="modal-title" id="modalComplaintTitle">Review Complaint: CFX-2026-00124</h3>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);" id="modalReportedDate">Reported on: 2026-09-24</p>
+                </div>
+                <button type="button" class="modal-close-btn" onclick="CivicApp.closeAdminModal()" aria-label="Close modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Citizen Report Preview Card -->
+                <div class="modal-complaint-preview">
+                    <img id="modalPhotoThumb" src="assets/images/pothole.jpg" class="modal-preview-thumb" alt="Complaint Photo" onclick="CivicApp.openLightbox(this.src)">
+                    <div class="modal-preview-info">
+                        <h4 id="modalIssueName" style="font-size: 1.05rem; margin-bottom: 0.35rem;">Large pothole near main road</h4>
+                        <p id="modalDescription" style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.6rem;"></p>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <span><i class="fa-solid fa-location-dot text-red-400"></i> <strong id="modalLocation">Main Road</strong></span>
+                            <span><i class="fa-solid fa-tag text-blue-400"></i> <strong id="modalCategory">Pothole</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Action Controls Form -->
+                <form id="adminUpdateForm" onsubmit="event.preventDefault(); CivicApp.saveAdminComplaint();">
+                    <input type="hidden" id="modalComplaintId">
+
+                    <!-- Change Status -->
+                    <div class="form-group">
+                        <label class="form-label" for="modalStatusSelect">
+                            <i class="fa-solid fa-bars-progress text-sky-400"></i> Change Status Stage <span class="required">*</span>
+                        </label>
+                        <select id="modalStatusSelect" class="form-select">
+                            <option value="Reported">Reported – Newly logged by citizen</option>
+                            <option value="Assigned">Assigned – Allocated to municipal department</option>
+                            <option value="In Progress">In Progress – Field crew active on site</option>
+                            <option value="Resolved">Resolved – Remediation completed & verified</option>
+                        </select>
+                    </div>
+
+                    <!-- Assign Responsible Department -->
+                    <div class="form-group">
+                        <label class="form-label" for="modalDepartmentSelect">
+                            <i class="fa-solid fa-users-gear text-purple-400"></i> Assign Responsible Authority / Team
+                        </label>
+                        <select id="modalDepartmentSelect" class="form-select">
+                            <option value="Unassigned">Unassigned (Awaiting Review)</option>
+                            <option value="Road Maintenance">Road Maintenance Wing</option>
+                            <option value="Public Works">Public Works Department (PWD)</option>
+                            <option value="Water Department">Water & Drainage Department</option>
+                            <option value="Sanitation">Sanitation & Solid Waste Team</option>
+                            <option value="Local Maintenance Team">Local Ward Maintenance Squad</option>
+                        </select>
+                    </div>
+
+                    <!-- Priority Level -->
+                    <div class="form-group">
+                        <label class="form-label" for="modalPrioritySelect">
+                            <i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Urgency / Priority Rating
+                        </label>
+                        <select id="modalPrioritySelect" class="form-select">
+                            <option value="Low">Low – Non-critical cosmetic or minor wear</option>
+                            <option value="Medium">Medium – Moderate pedestrian or traffic disruption</option>
+                            <option value="High">High – Vehicle hazard, major road damage</option>
+                            <option value="Critical">Critical – Immediate life safety / accident hazard</option>
+                        </select>
+                    </div>
+
+                    <!-- Admin Remarks / Resolution Notes -->
+                    <div class="form-group">
+                        <label class="form-label" for="modalRemarks">
+                            <i class="fa-solid fa-comment-dots text-emerald-400"></i> Field Operation Notes / Resolution Remarks
+                        </label>
+                        <textarea id="modalRemarks" class="form-textarea" placeholder="Add work order numbers, crew notes, or resolution sign-off details..."></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="CivicApp.closeAdminModal()">Close</button>
+                <button type="button" class="btn btn-primary" onclick="CivicApp.saveAdminComplaint()">
+                    <i class="fa-solid fa-floppy-disk"></i> Save & Sync Updates
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         INNOVATION FORGE GUIDED DEMO TOUR BAR (Presentation Assistant)
+         ==================================================================== -->
+    <div class="demo-tour-bar" id="demoTourBar">
+        <div class="tour-indicator">
+            <span class="tour-pulse-dot"></span>
+            <span>Forge 2026 Demo Guide:</span>
+        </div>
+        <div class="tour-steps-pills">
+            <button class="tour-pill-btn" onclick="CivicApp.demoStep(1)">1. Home</button>
+            <button class="tour-pill-btn" onclick="CivicApp.demoStep(2)">2. Report Pothole</button>
+            <button class="tour-pill-btn" onclick="CivicApp.demoStep(3)">3. Track ID</button>
+            <button class="tour-pill-btn" onclick="CivicApp.demoStep(4)">4. Admin Portal</button>
+            <button class="tour-pill-btn" onclick="CivicApp.demoStep(5)">5. Advance Status</button>
+            <button class="tour-pill-btn" onclick="CivicApp.demoStep(6)">6. Resolved View</button>
+        </div>
+        <button class="tour-close-btn" onclick="CivicApp.toggleTourBar()" title="Minimize tour bar">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+
+    <!-- ====================================================================
+         IMAGE LIGHTBOX MODAL
+         ==================================================================== -->
+    <div class="lightbox-modal" id="lightboxModal" onclick="CivicApp.closeLightbox()">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <button class="lightbox-close" onclick="CivicApp.closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+            <img id="lightboxImg" src="" alt="Full view civic image">
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         TOAST NOTIFICATION CONTAINER
+         ==================================================================== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ====================================================================
+         CIVIC COPILOT – AI CIVIC ASSISTANT CHATBOT
+         ==================================================================== -->
+    <!-- Floating Launcher Trigger Button & Teaser -->
+    <div class="copilot-launcher-container" id="copilotLauncherContainer">
+        <div class="copilot-teaser-pill" id="copilotTeaserPill" title="Click to chat with Civic Copilot">
+            <span class="copilot-teaser-badge">AI Assistant</span>
+            <span class="copilot-teaser-text">Need help? Ask Civic Copilot</span>
+            <button type="button" class="copilot-teaser-close" id="copilotTeaserClose" aria-label="Dismiss greeting">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <button class="copilot-floating-btn" id="civicCopilotTriggerBtn" aria-label="Open Civic Copilot AI Assistant" title="Open Civic Copilot">
+            <div class="copilot-pulse-ring" aria-hidden="true"></div>
+            <div class="copilot-online-dot" aria-hidden="true"></div>
+            <i class="fa-solid fa-robot copilot-btn-icon-open" aria-hidden="true"></i>
+            <i class="fa-solid fa-xmark copilot-btn-icon-close" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- Chatbot Window Widget -->
+    <div class="copilot-widget" id="civicCopilotWidget" role="dialog" aria-labelledby="copilotHeaderTitle" aria-modal="true">
+        <!-- Header -->
+        <div class="copilot-header">
+            <div class="copilot-header-brand">
+                <div class="copilot-avatar">
+                    <i class="fa-solid fa-robot"></i>
+                    <div class="copilot-avatar-status" title="Active & Ready"></div>
+                </div>
+                <div class="copilot-title-box">
+                    <div class="copilot-title-row">
+                        <span class="copilot-title" id="copilotHeaderTitle">Civic Copilot</span>
+                        <span class="copilot-demo-pill">Demo Mode</span>
+                    </div>
+                    <span class="copilot-subtitle">
+                        <span class="copilot-subtitle-dot"></span>
+                        AI Civic Assistant • CivicFix
+                    </span>
+                </div>
+            </div>
+            <div class="copilot-header-actions">
+                <button type="button" class="copilot-header-btn" id="copilotResetBtn" title="Reset Conversation" aria-label="Reset Conversation">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+                <button type="button" class="copilot-header-btn" id="copilotMinimizeBtn" title="Close Copilot" aria-label="Close Copilot">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Demo Mode Notice Bar -->
+        <div class="copilot-demo-bar">
+            <div class="copilot-demo-bar-left">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>Demo AI powered by CivicFix municipal rules & live registry.</span>
+            </div>
+        </div>
+
+        <!-- Chat Messages List -->
+        <div class="copilot-messages-container" id="copilotMessages" role="log" aria-live="polite">
+            <!-- Messages dynamically rendered here by CivicCopilot -->
+        </div>
+
+        <!-- Quick-Reply Suggested Actions -->
+        <div class="copilot-quick-replies-area" id="copilotQuickArea">
+            <div class="copilot-quick-title">
+                <i class="fa-solid fa-bolt"></i> Quick Inquiries
+            </div>
+            <div class="copilot-chips-carousel" id="copilotChipsCarousel">
+                <!-- Chips rendered here dynamically -->
+            </div>
+        </div>
+
+        <!-- Chat Input Footer -->
+        <div class="copilot-footer">
+            <form class="copilot-input-form" id="copilotInputForm" autocomplete="off">
+                <input 
+                    type="text" 
+                    id="copilotInput" 
+                    class="copilot-input" 
+                    placeholder="Ask about potholes, garbage, streetlights, or enter ID..." 
+                    aria-label="Message to Civic Copilot"
+                />
+                <button type="submit" class="copilot-send-btn" id="copilotSendBtn" aria-label="Send message">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+            <div class="copilot-footer-caption">
+                Civic Copilot uses verified CivicFix records. Innovation Forge 2026.
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>
